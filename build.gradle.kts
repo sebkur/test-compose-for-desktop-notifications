@@ -42,6 +42,9 @@ allprojects {
 dependencies {
     implementation(compose.desktop.currentOs)
     implementation(compose.materialIconsExtended)
+    implementation("io.github.microutils:kotlin-logging-jvm:3.0.0")
+    implementation("net.java.dev.jna:jna:5.12.1")
+    implementation("ch.qos.logback:logback-classic:1.4.1")
 }
 
 tasks.withType<KotlinCompile> {

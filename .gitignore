@@ -23,6 +23,7 @@ projectFilesBackup/
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+!.idea/dictionaries/words.xml
 
 # Generated files
 .idea/**/contentModel.xml
