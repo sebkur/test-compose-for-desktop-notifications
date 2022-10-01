@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.singleWindowApplication
 import de.mobanisto.test.notifications.linux.LibNotifyNotificationSink
 import de.mobanisto.test.notifications.NotificationSink
+import de.mobanisto.test.notifications.StubNotificationSink
+import de.mobanisto.test.notifications.windows.Shell32NotificationSink
 
 fun main() {
     Main().run()
@@ -26,7 +28,12 @@ class Main {
     fun run() {
         println("Test")
 
-        notificationSink = LibNotifyNotificationSink("Test Notifications")
+        val title = "Test Notifications"
+        notificationSink = when {
+            OsUtils.isLinux -> LibNotifyNotificationSink(title)
+            OsUtils.isWindows -> Shell32NotificationSink(title)
+            else -> StubNotificationSink
+        }
         notificationSink.init()
 
         singleWindowApplication(title = "Testing Notifications") {

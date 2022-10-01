@@ -19,3 +19,15 @@ interface NotificationSink {
 
     fun notify(message: String)
 }
+
+object StubNotificationSink : NotificationSink {
+    override val available: Boolean
+        get() = false
+
+    override val errorMessage: String
+        get() = "Stub notification sink"
+
+    override fun init() {}
+    override fun uninit() {}
+    override fun notify(message: String) {}
+}
