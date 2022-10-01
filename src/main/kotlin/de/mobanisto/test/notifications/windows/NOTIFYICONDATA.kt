@@ -23,7 +23,7 @@ import com.sun.jna.platform.win32.WinDef.HWND
 /**
  * http://msdn.microsoft.com/en-us/library/windows/desktop/bb773352(v=vs.85).aspx
  */
-internal class NOTIFYICONDATA : Structure() {
+class NOTIFYICONDATA : Structure() {
     companion object {
         const val NIF_MESSAGE = 0x1
         const val NIF_ICON = 0x2
