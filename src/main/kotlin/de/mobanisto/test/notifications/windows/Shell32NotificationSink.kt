@@ -2,9 +2,9 @@ package de.mobanisto.test.notifications.windows
 
 import com.sun.jna.Library
 import com.sun.jna.Native
-import com.sun.jna.NativeLibrary
 import com.sun.jna.platform.win32.User32
 import com.sun.jna.platform.win32.WinDef
+import com.sun.jna.platform.win32.WinDef.HWND
 import com.sun.jna.platform.win32.WinUser
 import com.sun.jna.win32.W32APIOptions
 import de.mobanisto.test.notifications.NotificationSink
@@ -14,7 +14,7 @@ import java.io.File
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 
-class Shell32NotificationSink(private val title: String) : NotificationSink {
+class Shell32NotificationSink(private val hWnd: HWND, private val title: String) : NotificationSink {
 
     companion object {
         const val NIM_ADD = 0x0
@@ -50,6 +50,7 @@ class Shell32NotificationSink(private val title: String) : NotificationSink {
 
     override fun uninit() {
         val data = NOTIFYICONDATA()
+        data.hWnd = hWnd
         libShell32.Shell_NotifyIcon(NIM_DELETE, data)
     }
 
@@ -63,6 +64,7 @@ class Shell32NotificationSink(private val title: String) : NotificationSink {
             User32.INSTANCE.LoadImage(null, tmp.absolutePath, WinUser.IMAGE_ICON, 0, 0, WinUser.LR_LOADFROMFILE)
 
         val data = NOTIFYICONDATA()
+        data.hWnd = hWnd
         data.setBalloon(title, message, 10000, NIIF_NONE or NIIF_NOSOUND)
         val icon = WinDef.HICON(image)
         data.setIcon(icon)

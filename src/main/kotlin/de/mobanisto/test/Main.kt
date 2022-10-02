@@ -12,9 +12,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.singleWindowApplication
-import de.mobanisto.test.notifications.linux.LibNotifyNotificationSink
+import com.sun.jna.Native
+import com.sun.jna.platform.win32.WinDef.HWND
 import de.mobanisto.test.notifications.NotificationSink
 import de.mobanisto.test.notifications.StubNotificationSink
+import de.mobanisto.test.notifications.linux.LibNotifyNotificationSink
 import de.mobanisto.test.notifications.windows.Shell32NotificationSink
 
 fun main() {
@@ -28,16 +30,16 @@ class Main {
     fun run() {
         println("Test")
 
-        val title = "Test Notifications"
-        notificationSink = when {
-            OsUtils.isLinux -> LibNotifyNotificationSink(title)
-            OsUtils.isWindows -> Shell32NotificationSink(title)
-            else -> StubNotificationSink
-        }
-        notificationSink.init()
-
         singleWindowApplication(title = "Testing Notifications") {
             DisposableEffect(Unit) {
+                val hWnd = HWND(Native.getComponentPointer(window))
+                val title = "Test Notifications"
+                notificationSink = when {
+                    OsUtils.isLinux -> LibNotifyNotificationSink(title)
+                    OsUtils.isWindows -> Shell32NotificationSink(hWnd, title)
+                    else -> StubNotificationSink
+                }
+                notificationSink.init()
                 onDispose {
                     notificationSink.uninit()
                 }
