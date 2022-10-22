@@ -75,7 +75,7 @@ compose.desktop {
             licenseFile.set(project.file("LICENSE.txt"))
             linux {
                 packageName = "test-project"
-                debPackageVersion = "$versionCode"
+                debPackageVersion = versionCode
                 appCategory = "comm"
                 menuGroup = "Network;Chat;InstantMessaging;"
             }
