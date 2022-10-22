@@ -17,9 +17,9 @@ buildscript {
 }
 
 plugins {
-    kotlin("jvm") version "1.6.10"
-    kotlin("kapt") version "1.6.10"
-    id("org.jetbrains.compose") version "1.1.0-alpha03"
+    kotlin("jvm") version "1.7.10"
+    kotlin("kapt") version "1.7.10"
+    id("org.jetbrains.compose") version "1.2.0"
     id("java")
     id("idea")
     id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
