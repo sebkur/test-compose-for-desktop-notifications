@@ -1,4 +1,4 @@
-package de.mobanisto.test.notifications.windows
+package de.mobanisto.test.notifications.windows.notify
 
 import com.sun.jna.Library
 import com.sun.jna.Native
@@ -8,8 +8,8 @@ import com.sun.jna.platform.win32.WinDef.HWND
 import com.sun.jna.platform.win32.WinUser
 import com.sun.jna.win32.W32APIOptions
 import de.mobanisto.test.notifications.NotificationSink
-import de.mobanisto.test.notifications.windows.NOTIFYICONDATA.Companion.NIIF_NONE
-import de.mobanisto.test.notifications.windows.NOTIFYICONDATA.Companion.NIIF_NOSOUND
+import de.mobanisto.test.notifications.windows.notify.NOTIFYICONDATA.Companion.NIIF_NONE
+import de.mobanisto.test.notifications.windows.notify.NOTIFYICONDATA.Companion.NIIF_NOSOUND
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption

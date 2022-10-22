@@ -17,13 +17,13 @@ import com.sun.jna.platform.win32.WinDef.HWND
 import de.mobanisto.test.notifications.NotificationSink
 import de.mobanisto.test.notifications.StubNotificationSink
 import de.mobanisto.test.notifications.linux.LibNotifyNotificationSink
-import de.mobanisto.test.notifications.windows.Shell32NotificationSink
+import de.mobanisto.test.notifications.windows.notify.Shell32NotificationSink
 
 fun main() {
-    Main().run()
+    MainWindowsNotify().run()
 }
 
-class Main {
+class MainWindowsNotify {
 
     private lateinit var notificationSink: NotificationSink
 
