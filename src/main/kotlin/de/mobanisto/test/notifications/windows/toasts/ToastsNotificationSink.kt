@@ -1,11 +1,10 @@
 package de.mobanisto.test.notifications.windows.toasts
 
-import com.sun.jna.platform.win32.WinDef.HWND
 import de.mobanisto.test.notifications.NotificationSink
 import de.mobanisto.wintoast.helper.ToastHandle
 import de.mobanisto.wintoast.helper.WinToastHelper
 
-class ToastsNotificationSink(private val hWnd: HWND, private val title: String) : NotificationSink {
+class ToastsNotificationSink(private val title: String) : NotificationSink {
 
     private lateinit var winToastHelper: WinToastHelper
 

@@ -10,8 +10,10 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.singleWindowApplication
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
 import com.sun.jna.Native
 import com.sun.jna.platform.win32.WinDef.HWND
 import de.mobanisto.test.notifications.NotificationSink
@@ -30,30 +32,36 @@ class MainWindowsNotify {
     fun run() {
         println("Test")
 
-        singleWindowApplication(title = "Testing Notifications") {
-            DisposableEffect(Unit) {
-                val hWnd = HWND(Native.getComponentPointer(window))
-                val title = "Test Notifications"
-                notificationSink = when {
-                    OsUtils.isLinux -> LibNotifyNotificationSink(title)
-                    OsUtils.isWindows -> Shell32NotificationSink(hWnd, title)
-                    else -> StubNotificationSink
-                }
-                notificationSink.init()
-                onDispose {
-                    notificationSink.uninit()
-                }
-            }
-
-            val (value, setValue) = remember { mutableStateOf("message text in notification") }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.padding(16.dp)
+        application {
+            Window(
+                onCloseRequest = ::exitApplication,
+                title = "Testing Notifications",
+                icon = painterResource("icon.png")
             ) {
-                Text("Enter some text and press 'send' to display the message as a notification:")
-                TextField(value, setValue)
-                TextButton({ sendNotification(value) }) {
-                    Text("Send")
+                DisposableEffect(Unit) {
+                    val hWnd = HWND(Native.getComponentPointer(window))
+                    val title = "Test Notifications"
+                    notificationSink = when {
+                        OsUtils.isLinux -> LibNotifyNotificationSink(title)
+                        OsUtils.isWindows -> Shell32NotificationSink(hWnd, title)
+                        else -> StubNotificationSink
+                    }
+                    notificationSink.init()
+                    onDispose {
+                        notificationSink.uninit()
+                    }
+                }
+
+                val (value, setValue) = remember { mutableStateOf("message text in notification") }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text("Enter some text and press 'send' to display the message as a notification:")
+                    TextField(value, setValue)
+                    TextButton({ sendNotification(value) }) {
+                        Text("Send")
+                    }
                 }
             }
         }
