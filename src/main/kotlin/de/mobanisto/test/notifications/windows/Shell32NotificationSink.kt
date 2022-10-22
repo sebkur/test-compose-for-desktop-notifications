@@ -46,6 +46,8 @@ class Shell32NotificationSink(private val hWnd: HWND, private val title: String)
             options[key] = value
         }
         libShell32 = Native.load("shell32", Shell32::class.java, options)
+        val data = NOTIFYICONDATA()
+        display(data)
     }
 
     override fun uninit() {
@@ -54,8 +56,14 @@ class Shell32NotificationSink(private val hWnd: HWND, private val title: String)
         libShell32.Shell_NotifyIcon(NIM_DELETE, data)
     }
 
-    var first = true
     override fun notify(message: String) {
+        val data = NOTIFYICONDATA()
+        data.setBalloon(title, message, 10000, NIIF_NONE or NIIF_NOSOUND)
+        display(data)
+    }
+
+    var first = true
+    fun display(data: NOTIFYICONDATA) {
         // Copy icon from resources to temporary file because LoadImage only works with files
         val tmp = File.createTempFile("test-notifications", ".ico")
         Thread.currentThread().contextClassLoader.getResourceAsStream("icon.ico").use {
@@ -64,9 +72,7 @@ class Shell32NotificationSink(private val hWnd: HWND, private val title: String)
         val image =
             User32.INSTANCE.LoadImage(null, tmp.absolutePath, WinUser.IMAGE_ICON, 0, 0, WinUser.LR_LOADFROMFILE)
 
-        val data = NOTIFYICONDATA()
         data.hWnd = hWnd
-        data.setBalloon(title, message, 10000, NIIF_NONE or NIIF_NOSOUND)
         val icon = WinDef.HICON(image)
         data.setIcon(icon)
         var ret: Boolean
@@ -77,7 +83,7 @@ class Shell32NotificationSink(private val hWnd: HWND, private val title: String)
             ret = libShell32.Shell_NotifyIcon(NIM_MODIFY, data)
         }
         User32.INSTANCE.DestroyIcon(icon)
-        println("return value: $ret")
+        println("return value: $ret, id: ${data.uID}")
     }
 
     interface Shell32 : Library {
