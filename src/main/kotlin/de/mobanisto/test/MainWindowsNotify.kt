@@ -57,6 +57,7 @@ class MainWindowsNotify {
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier.padding(16.dp)
                 ) {
+                    Text("Windows implementation: libnotify")
                     Text("Enter some text and press 'send' to display the message as a notification:")
                     TextField(value, setValue)
                     TextButton({ sendNotification(value) }) {
