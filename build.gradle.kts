@@ -83,6 +83,8 @@ compose.desktop {
             windows {
                 iconFile.set(project.file("src/main/resources/icon.ico"))
                 upgradeUuid = "CBF591AA-28D0-49DC-B812-43F6583AF06C"
+                menu = true
+                menuGroup = "Mobanisto"
             }
         }
     }
