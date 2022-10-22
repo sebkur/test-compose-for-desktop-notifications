@@ -5,7 +5,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     repositories {
-        jcenter()
         mavenLocal()
         google()
         maven("https://plugins.gradle.org/m2/")
@@ -35,7 +34,6 @@ allprojects {
         mavenCentral()
         jetbrainsCompose()
         google()
-        jcenter()
     }
 }
 
