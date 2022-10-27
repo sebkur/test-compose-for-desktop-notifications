@@ -40,7 +40,9 @@ class MainWindowsToasts {
                     val title = "Test Notifications"
                     notificationSink = when {
                         OsUtils.isLinux -> LibNotifyNotificationSink(title)
-                        OsUtils.isWindows -> ToastsNotificationSink(title)
+                        OsUtils.isWindows -> ToastsNotificationSink(
+                            "$title", "Mobanisto\\$title"
+                        )
                         else -> StubNotificationSink
                     }
                     notificationSink.init()
