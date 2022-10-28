@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.mobanisto.test.notifications.windows
+package de.mobanisto.test.notifications.windows.notify
 
 import com.sun.jna.Structure
 import com.sun.jna.platform.win32.WinDef

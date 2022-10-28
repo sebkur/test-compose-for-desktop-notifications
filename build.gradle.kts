@@ -1,4 +1,3 @@
-import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.compose.jetbrainsCompose
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -44,6 +43,7 @@ dependencies {
     implementation("net.java.dev.jna:jna:5.12.1")
     implementation("net.java.dev.jna:jna-platform:5.12.1")
     implementation("ch.qos.logback:logback-classic:1.4.4")
+    implementation("de.mobanisto:toast4j:0.1.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -65,11 +65,11 @@ tasks.register<proguard.gradle.ProGuardTask>("minify") {
 
 compose.desktop {
     application {
-        mainClass = "de.mobanisto.test.MainKt"
+        mainClass = "de.mobanisto.test.MainWindowsToastsKt"
         nativeDistributions {
-            targetFormats(TargetFormat.Deb)
-            packageName = "Test"
-            description = "Test project"
+            targetFormats(TargetFormat.Deb, TargetFormat.Msi)
+            packageName = "Test Notifications"
+            description = "Test Notifications using Compose"
             vendor = "Mobanisto"
             copyright = "2022 Mobanisto"
             licenseFile.set(project.file("LICENSE.txt"))
@@ -78,6 +78,12 @@ compose.desktop {
                 debPackageVersion = versionCode
                 appCategory = "comm"
                 menuGroup = "Network;Chat;InstantMessaging;"
+            }
+            windows {
+                iconFile.set(project.file("src/main/resources/icon.ico"))
+                upgradeUuid = "CBF591AA-28D0-49DC-B812-43F6583AF06C"
+                menu = true
+                menuGroup = "Mobanisto"
             }
         }
     }
