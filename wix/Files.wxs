@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment Id="FragmentFiles">
+        <DirectoryRef Id="TARGETDIR">
+            <Directory Id="ProgramFiles64Folder">
+                <Directory Id="INSTALLDIR" Name="Hello World">
+                    <Component Id="File2">
+                        <File Id="test_jpackage.exe" KeyPath="yes" Source="../build/compose/tmp/jpackage/images/win-msi.image/Test Notifications/Test Notifications.exe"/>
+                    </Component>
+                    <Component Id="File3">
+                        <File Id="test_jpackage.ico" KeyPath="yes" Source="../build/compose/tmp/jpackage/images/win-msi.image/Test Notifications/Test Notifications.ico"/>
+                    </Component>
+                    <Directory Id="dir_app" Name="app">
+                        <Component Id="File4">
+                            <File Id="icudtl.dat" KeyPath="yes" Source="../build/compose/tmp/jpackage/images/win-msi.image/Test Notifications/app/icudtl.dat"/>
+                        </Component>
+                        <Component Id="File5">
+                            <File Id="skiko_windows_x64.dll" KeyPath="yes" Source="../build/compose/tmp/jpackage/images/win-msi.image/Test Notifications/app/skiko-windows-x64.dll"/>
+                        </Component>
+                    </Directory>
+                </Directory>
+            </Directory>
+        </DirectoryRef>
+        <ComponentGroup Id="Files">
+            <ComponentRef Id="File2"></ComponentRef>
+            <ComponentRef Id="File3"></ComponentRef>
+            <ComponentRef Id="File4"></ComponentRef>
+            <ComponentRef Id="File5"></ComponentRef>
+        </ComponentGroup>
+    </Fragment>
+</Wix>

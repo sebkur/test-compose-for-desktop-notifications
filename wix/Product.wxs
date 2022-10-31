@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Id="827a836c-0cd8-46fa-b179-3e7f8bf3d9ce"
+             UpgradeCode="fd9ba43a-7461-4230-bd8a-1617f9c192fe"
+             Language="1033"
+             Manufacturer="Mobanisto"
+             Name="Helloworld"
+             Version="0.0.1">
+
+    <Package InstallScope="perMachine" Compressed="yes"/>
+
+    <WixVariable Id="WixUIBannerBmp" Value="banner.bmp"/>
+    <WixVariable Id="WixUIDialogBmp" Value="dialog.bmp"/>
+
+    <MediaTemplate EmbedCab="yes"/>
+
+    <Directory Id="TARGETDIR" Name="SourceDir"/>
+
+    <DirectoryRef Id="TARGETDIR">
+        <Directory Id="ProgramMenuFolder">
+            <Directory Id="ApplicationProgramsFolder" Name="Mobanisto"/>
+        </Directory>
+    </DirectoryRef>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+        <Component Id="ApplicationShortcut" Guid="f727310f-fd7b-45e1-9cd4-25740377dfaa">
+            <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="Helloworld"
+                  Description="My Application Description"
+                  Target="[#test_jpackage.exe]"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"
+                  Icon="hello_ico">
+                <ShortcutProperty Key="System.AppUserModel.ID" Value="Mobanisto.Helloworld" />
+            </Shortcut>
+            <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+            <RegistryValue Root="HKCU" Key="Software\Moanisto\Helloworld" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+        </Component>
+    </DirectoryRef>
+
+    <Feature Id="HelloWorldFeature">
+        <ComponentGroupRef Id="Files"/>
+        <ComponentRef Id="ApplicationShortcut"/>
+    </Feature>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR"/>
+    <UI Id="JpUI">
+        <UIRef Id="WixUI_InstallDir"/>
+        <!--DialogRef Id="InstallDirNotEmptyDlg"></DialogRef-->
+        <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg" Order="6">NOT Installed</Publish>
+        <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="6">NOT Installed</Publish>
+    </UI>
+
+    <UIRef Id="JpUI"/>
+
+    <Icon Id="hello_ico" SourceFile="hello.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="hello_ico"/>
+  </Product>
+</Wix>
