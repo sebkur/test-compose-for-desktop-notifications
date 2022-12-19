@@ -41,7 +41,7 @@ class MainWindowsToasts {
                     notificationSink = when {
                         OsUtils.isLinux -> LibNotifyNotificationSink(title)
                         OsUtils.isWindows -> ToastsNotificationSink(
-                            "$title", "Mobanisto\\$title"
+                            "Mobanisto.$title", "Mobanisto\\$title"
                         )
                         else -> StubNotificationSink
                     }

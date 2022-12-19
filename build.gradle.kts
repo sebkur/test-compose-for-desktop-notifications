@@ -43,7 +43,7 @@ dependencies {
     implementation("net.java.dev.jna:jna:5.12.1")
     implementation("net.java.dev.jna:jna-platform:5.12.1")
     implementation("ch.qos.logback:logback-classic:1.4.4")
-    implementation("de.mobanisto:toast4j:0.1.0")
+    implementation("de.mobanisto:toast4j:0.2.0")
 }
 
 tasks.withType<KotlinCompile> {
